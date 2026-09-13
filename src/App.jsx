@@ -338,32 +338,6 @@ function App() {
               <path d="m12 5 7 7-7 7"></path>
             </svg>
           </button>
-
-          <button
-            type="button"
-            onClick={handleTestPreview}
-            style={{
-              width: '100%',
-              padding: '14px',
-              marginTop: '12px',
-              fontSize: '14px',
-              fontWeight: '600',
-              color: '#4B5563',
-              backgroundColor: '#F3F4F6',
-              border: 'none',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#E5E7EB'; }}
-            onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#F3F4F6'; }}
-          >
-            결과지 무작위 미리보기 (테스트용)
-          </button>
         </div>
       </div>
     );
