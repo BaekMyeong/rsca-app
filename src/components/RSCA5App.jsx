@@ -132,6 +132,16 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
           <div style={{ backgroundColor: 'rgba(26, 36, 51, 0.04)', padding: '14px', borderRadius: '10px', fontSize: '13.5px', color: 'var(--color-navy-primary)', fontWeight: '700', lineHeight: '1.5' }}>
             ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SCF 인증과정에서 확인 가능합니다.
           </div>
+
+          <a
+            href="https://www.mcoaching.net/programs/intro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ display: 'inline-block', textDecoration: 'none', marginTop: '20px', padding: '14px 20px', fontSize: '14px' }}
+          >
+            SCF 인증과정 안내 보러가기 →
+          </a>
         </div>
 
         <button
