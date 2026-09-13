@@ -127,19 +127,11 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
             DEEP ASSESSMENT
           </span>
           <h3 style={{ fontSize: '18px', fontWeight: '800', margin: '0 0 10px 0', color: 'var(--color-navy-primary)' }}>
-            REACH 5각 균형망과 3대 대처 스킬 확인하기
+            나의 내면 에너지를 더 깊이 알고 싶다면?
           </h3>
-          <p style={{ fontSize: '14px', color: '#4A5568', margin: '0 0 24px 0', lineHeight: '1.6' }}>
-            5개 영역 상세 점수와 순간 대처력(거리두기·다독이기·울타리치기)은 30문항 정밀 검사에서 상세 리포트로 제공됩니다.
-          </p>
-
-          <button
-            type="button"
-            className="btn-primary"
-            onClick={onGoToDeepAssessment}
-          >
-            RSCA-30 정밀 진단 진행하기 (약 3분) →
-          </button>
+          <div style={{ backgroundColor: 'rgba(26, 36, 51, 0.04)', padding: '14px', borderRadius: '10px', fontSize: '13.5px', color: 'var(--color-navy-primary)', fontWeight: '700', lineHeight: '1.5' }}>
+            ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SEHA 공식 홈페이지의 정밀 진단을 통해 제공됩니다.
+          </div>
         </div>
 
         <button
