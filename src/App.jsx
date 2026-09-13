@@ -41,7 +41,7 @@ export const ReachEmblem = () => {
   );
 };
 
-function App() {
+function RSCADeepApp() {
   // Load initial state from sessionStorage
   const [step, setStep] = useState(() => {
     const saved = sessionStorage.getItem('rsca_step');
@@ -655,4 +655,15 @@ function App() {
   return null;
 }
 
-export default App;
+import RSCA5App from './components/RSCA5App';
+
+export default function App() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const typeParam = searchParams.get('type');
+  
+  if (typeParam === 'short') {
+    return <RSCA5App onGoToDeepAssessment={() => { window.location.href = window.location.pathname; }} />;
+  }
+
+  return <RSCADeepApp />;
+}
