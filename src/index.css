@@ -1,6 +1,264 @@
-/* index.css cleared for MVP */
+:root {
+  --color-beige-bg: #F9F6F0; /* Soft Oatmeal Beige */
+  --color-beige-card: #FFFFFF;
+  --color-navy-primary: #1A2433; /* Deep Navy */
+  --color-navy-secondary: #415A77;
+  --color-navy-light: #778DA9;
+  --color-accent: #E2E8F0;
+  --color-text-main: #1A2433;
+  --color-text-muted: #4A5568; /* Charcoal Grey */
+  --color-input-bg: #FAFAFA;
+  
+  --radius-lg: 24px; /* Headspace style soft rounded */
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  
+  /* Headspace style soft deep shadow */
+  --shadow-sm: 0 4px 12px rgba(26, 36, 51, 0.04);
+  --shadow-md: 0 8px 30px rgba(26, 36, 51, 0.06);
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  background-color: var(--color-beige-bg);
+  color: var(--color-text-main);
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.02em; /* Oura style typography */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-navy-primary);
+  margin-top: 0;
+  letter-spacing: -0.03em;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  min-height: 100dvh; /* Mobile viewport height safe */
+  display: flex;
+  flex-direction: column;
+}
+
+.container.center-content {
+  justify-content: center;
+}
+
+/* Progress Bar (Thin & Elegant) */
+.progress-container {
+  margin-bottom: 32px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-navy-secondary);
+}
+
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--color-navy-primary);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--color-navy-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: #0F1621;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:disabled {
+  background-color: var(--color-navy-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-navy-primary);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(26, 36, 51, 0.03);
+  border-color: var(--color-navy-light);
+}
+
+/* Question & Intro Cards */
+.card-wrapper {
+  background: var(--color-beige-card);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(26, 36, 51, 0.03);
+  transition: border-color 0.3s;
+}
+
+.question-card {
+  background: var(--color-beige-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(26, 36, 51, 0.03);
+  transition: border-color 0.3s;
+}
+
+.question-card.answered {
+  border-color: rgba(26, 36, 51, 0.15);
+}
+
+.question-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Touch Optimized Selection Buttons */
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 52px;
+  padding: 0 20px;
+  background-color: var(--color-beige-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.option-btn:hover {
+  background-color: #F0EDEB;
+}
+
+.option-btn.selected {
+  background-color: var(--color-navy-primary);
+  color: #fff;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Form Elements */
+.input-field {
+  width: 100%; 
+  padding: 16px; 
+  border-radius: var(--radius-sm); 
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-input-bg);
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--color-navy-light);
+  box-shadow: 0 0 0 3px rgba(119, 141, 169, 0.1);
+  background-color: #FFFFFF;
+}
+
+/* Badge */
+.capsule-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: var(--color-navy-primary);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 16px;
+}
+
+/* Result Dashboard (Apple Health Style) */
+.result-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--color-navy-primary);
+}
+
+.chart-container {
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.skill-item {
+  padding: 20px;
+  background-color: var(--color-beige-bg);
+  border-radius: var(--radius-md);
+  margin-bottom: 12px;
+  border: 1px solid rgba(26, 36, 51, 0.04);
+}
+
+.skill-item h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
 }

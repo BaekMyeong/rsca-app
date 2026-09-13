@@ -22,16 +22,20 @@ export const calculateScores = (answers) => {
 export const getLevelInfo = (totalScore) => {
   if (totalScore <= 59) {
     return { level: 1, title: "번아웃 및 고갈 위기", badgeColor: "bg-rose-100 text-rose-700 border-rose-200",
-      description: "감정 에너지가 심각하게 방전된 상태입니다. 무리한 과업을 멈추고 자율신경계를 안정시키는 깊은 쉼이 우선입니다." };
+      quote: "애써 버텨온 내면의 신호에 귀 기울일 때입니다. 지금은 다른 어떤 과업보다 나를 돌보는 일이 가장 안전한 선택입니다.",
+      description: "감정 에너지가 심각하게 방전된 상태입니다.\n무리한 과업을 멈추고 자율신경계를 안정시키는 깊은 쉼이 우선입니다." };
   } else if (totalScore <= 89) {
     return { level: 2, title: "감정 마모 및 불균형", badgeColor: "bg-amber-100 text-amber-700 border-amber-200",
-      description: "일상의 자극으로 감정 소진이 누적된 상태입니다. 감정 누수 요인을 차단하고 감정 울타리를 점검할 때입니다." };
+      quote: "바쁜 일상 속에서 나도 모르게 에너지가 새어 나가고 있었습니다. 감정 울타리를 가만히 점검해 줄 시간입니다.",
+      description: "일상의 자극으로 감정 소진이 누적된 상태입니다.\n감정 누수 요인을 차단하고 감정 울타리를 점검할 때입니다." };
   } else if (totalScore <= 119) {
     return { level: 3, title: "감정적 안정", badgeColor: "bg-emerald-100 text-emerald-700 border-emerald-200",
-      description: "스스로 감정의 중심을 잘 잡고 일상의 회복 탄력성을 원활하게 유지하고 있는 상태입니다." };
+      quote: "일상의 흔들림 속에서도 중심을 잘 지켜내고 있습니다. 지금의 유연한 회복 리듬을 편안하게 유지해 보세요.",
+      description: "스스로 감정의 중심을 잘 잡고\n일상의 회복 탄력성을 원활하게 유지하고 있는 상태입니다." };
   } else {
     return { level: 4, title: "감정적 활력과 충만", badgeColor: "bg-blue-100 text-blue-700 border-blue-200",
-      description: "내면의 감정 에너지가 풍부하여 스스로를 깊이 돌볼 뿐 아니라 주변에 건강한 온기를 전하는 상태입니다." };
+      quote: "내면의 에너지가 따뜻하게 차올라 있습니다. 스스로를 깊이 돌보는 힘이 주변에도 건강한 온기로 전해집니다.",
+      description: "내면의 감정 에너지가 풍부하여 스스로를 깊이 돌볼 뿐 아니라\n주변에 건강한 온기를 전하는 상태입니다." };
   }
 };
 
@@ -66,7 +70,8 @@ export const getPersonaAndPrescription = (domainScores, totalScore) => {
     return {
       persona: "감정 회복탄력형",
       personaDesc: "5개 감정 축이 고르게 발달하여 스트레스 상황에서도 스스로 빠르게 회복하는 균형 잡힌 상태입니다.",
-      mvr: { trigger: "스트레스가 시작될 때", action: "지금 상태를 가만히 자각하고 호흡 3회 하기", effect: "탁월한 감정 회복력을 지속 유지" }
+      mvr: { trigger: "스트레스가 시작될 때", action: "지금 상태를 가만히 자각하고 호흡 3회 하기", effect: "탁월한 감정 회복력을 지속 유지" },
+      minDomain: null
     };
   }
 
@@ -88,5 +93,5 @@ export const getPersonaAndPrescription = (domainScores, totalScore) => {
       mvr: { trigger: "타인의 소식이나 성과를 보며 속이 쓰리고 불안해질 때", action: "화면을 끄고 지금 내 손안에 있는 소중한 자원 3가지를 적어보기", effect: "뇌의 결핍 경보를 끄고 내 존재 자체의 온전함으로 초점을 되돌립니다." } }
   };
 
-  return map[minDomain];
+  return { ...map[minDomain], minDomain };
 };
