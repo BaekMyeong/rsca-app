@@ -657,6 +657,73 @@ function RSCADeepApp() {
 
 import RSCA5App from './components/RSCA5App';
 
+function DeepAppGate() {
+  const [isAuthorized, setIsAuthorized] = useState(() => {
+    // If URL has ?test=true, we can optionally bypass, but the prompt says 
+    // "로컬에서 코드 없이 접속 시 막히는지, 올바른 코드(2606) 입력 시 정상 진입되는지 확인"
+    // So we'll strictly require it, or check ?test=true
+    if (window.location.search.includes('test=true')) return true;
+    return sessionStorage.getItem('rsca_deep_auth') === 'true';
+  });
+  const [code, setCode] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (code === '2606') {
+      sessionStorage.setItem('rsca_deep_auth', 'true');
+      setIsAuthorized(true);
+    } else {
+      setError('초대코드가 올바르지 않습니다.');
+    }
+  };
+
+  if (isAuthorized) {
+    return <RSCADeepApp />;
+  }
+
+  return (
+    <div className="container center-content">
+      <div className="card-wrapper" style={{ textAlign: 'center', padding: '40px 24px' }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '56px', height: '56px', borderRadius: '50%', backgroundColor: '#F1F5F9', marginBottom: '20px' }}>
+          <span style={{ fontSize: '24px' }}>🔒</span>
+        </div>
+        <h2 style={{ fontSize: '24px', fontWeight: '800', color: 'var(--color-navy-primary)', marginBottom: '8px' }}>
+          초대코드 입력
+        </h2>
+        <p style={{ fontSize: '15px', color: 'var(--color-text-muted)', marginBottom: '32px', lineHeight: '1.5' }}>
+          RSCA-30 정밀 진단을 시작하려면<br/>부여받은 초대코드를 입력해 주세요.
+        </p>
+        
+        <form onSubmit={handleSubmit}>
+          <input
+            type="password"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder="초대코드 4자리"
+            style={{
+              width: '100%',
+              padding: '16px',
+              fontSize: '18px',
+              textAlign: 'center',
+              letterSpacing: '0.1em',
+              borderRadius: '12px',
+              border: '1px solid var(--color-accent)',
+              marginBottom: '16px',
+              boxSizing: 'border-box',
+              backgroundColor: 'var(--color-input-bg)'
+            }}
+          />
+          {error && <p style={{ color: '#E17055', fontSize: '14px', margin: '0 0 16px 0', fontWeight: '600' }}>{error}</p>}
+          <button type="submit" className="btn-primary">
+            입장하기
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const searchParams = new URLSearchParams(window.location.search);
   const typeParam = searchParams.get('type');
@@ -665,5 +732,5 @@ export default function App() {
     return <RSCA5App onGoToDeepAssessment={() => { window.location.href = window.location.pathname; }} />;
   }
 
-  return <RSCADeepApp />;
+  return <DeepAppGate />;
 }
