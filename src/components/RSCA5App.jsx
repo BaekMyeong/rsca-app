@@ -130,7 +130,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
             나의 내면 에너지를 더 깊이 알고 싶다면?
           </h3>
           <div style={{ backgroundColor: 'rgba(26, 36, 51, 0.04)', padding: '14px', borderRadius: '10px', fontSize: '13.5px', color: 'var(--color-navy-primary)', fontWeight: '700', lineHeight: '1.5' }}>
-            ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SEHA 공식 홈페이지의 정밀 진단을 통해 제공됩니다.
+            ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SCF 인증과정에서 제공됩니다.
           </div>
         </div>
 
