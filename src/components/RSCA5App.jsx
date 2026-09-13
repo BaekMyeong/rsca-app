@@ -140,7 +140,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
             className="btn-primary"
             style={{ display: 'inline-block', textDecoration: 'none', marginTop: '20px', padding: '14px 20px', fontSize: '14px' }}
           >
-            SCF 인증과정 안내 보러가기 →
+            SCF 인증과정 상세 보기 →
           </a>
         </div>
 
