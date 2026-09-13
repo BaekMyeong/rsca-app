@@ -127,10 +127,10 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
             DEEP ASSESSMENT
           </span>
           <h3 style={{ fontSize: '18px', fontWeight: '800', margin: '0 0 10px 0', color: 'var(--color-navy-primary)' }}>
-            나의 내면 에너지를 더 깊이 알고 싶다면?
+            나의 셀프케어 수준을 더 정확히 알고 싶다면?
           </h3>
           <div style={{ backgroundColor: 'rgba(26, 36, 51, 0.04)', padding: '14px', borderRadius: '10px', fontSize: '13.5px', color: 'var(--color-navy-primary)', fontWeight: '700', lineHeight: '1.5' }}>
-            ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SCF 인증과정에서 제공됩니다.
+            ※ 5개 영역 상세 점수와 맞춤형 처방 리포트는<br/>SCF 인증과정에서 확인 가능합니다.
           </div>
         </div>
 
