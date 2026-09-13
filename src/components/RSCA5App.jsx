@@ -14,6 +14,14 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (!userName.trim()) {
+      setErrorMsg('이름을 입력해 주세요.');
+      const target = document.getElementById('user-name');
+      if (target) target.focus();
+      return;
+    }
+
     // 5문항 응답 여부 점검
     const missing = RSCA5_QUESTIONS.find((q) => !answers[q.id]);
     if (missing) {
@@ -41,12 +49,12 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
     return (
       <div className="container">
         {/* 상단 헤더 */}
-        <header style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 4px 0' }}>
+        <header style={{ textAlign: 'center', margin: '0 0 24px 0' }}>
+          <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 4px 0', fontWeight: '600', letterSpacing: '0.02em' }}>
             RSCA-5 LITE RESULT
           </p>
           <h2 style={{ fontSize: '22px', fontWeight: '700', margin: '0 0 4px 0', color: 'var(--color-navy-primary)' }}>
-            {userName ? `${userName} 님의 감정 배터리` : '나의 감정 배터리 진단'}
+            {userName ? `${userName} 님의 내면 에너지 상태` : '나의 내면 에너지 상태'}
           </h2>
           <p style={{ fontSize: '13px', color: '#64748B', margin: 0 }}>
             핵심 5문항으로 살펴본 현재 마음 잔량입니다.
@@ -134,10 +142,10 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
     <div className="container">
       <header style={{ textAlign: 'center', marginBottom: '32px' }}>
         <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy-primary)', backgroundColor: '#E2E8F0', padding: '4px 12px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px' }}>
-          30초 쾌속 점검
+          약식 진단
         </span>
         <h1 style={{ fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0', color: 'var(--color-navy-primary)' }}>
-          RSCA-5 감정 배터리 체크
+          RSCA-5 셀프케어 약식 점검
         </h1>
         <p style={{ fontSize: '15px', color: '#4A5568', margin: 0 }}>
           나의 내면 에너지 잔량을 5개 핵심 문항으로 확인합니다.
@@ -147,7 +155,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
       {/* 성함 입력 */}
       <div className="card-wrapper" style={{ padding: '24px' }}>
         <label htmlFor="user-name" style={{ display: 'block', fontSize: '14px', fontWeight: '700', color: 'var(--color-navy-primary)', marginBottom: '8px' }}>
-          성함 (선택)
+          이름 (필수)
         </label>
         <input
           id="user-name"
