@@ -3,7 +3,10 @@ import { RSCA5_QUESTIONS } from '../data/rsca5Questions';
 import { calculateRSCA5 } from '../logic/rsca5Logic';
 
 export default function RSCA5App({ onGoToDeepAssessment }) {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('name') || '';
+  });
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
