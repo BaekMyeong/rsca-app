@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RSCA5_QUESTIONS } from '../data/rsca5Questions';
 import { calculateRSCA5 } from '../logic/rsca5Logic';
 
@@ -7,6 +7,23 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+
+  // Test mode: auto-fill and jump to result if URL has ?test=true
+  useEffect(() => {
+    if (window.location.search.includes('test=true') && !submitted) {
+      const mockAnswers = {};
+      RSCA5_QUESTIONS.forEach(q => {
+        mockAnswers[q.id] = Math.floor(Math.random() * 5) + 1;
+      });
+      setAnswers(mockAnswers);
+      setUserName('테스터');
+      setSubmitted(true);
+      window.scrollTo(0, 0);
+      
+      // Clean up URL to avoid looping on refresh
+      window.history.replaceState({}, '', window.location.pathname + '?type=short');
+    }
+  }, [submitted]);
 
   const handleSelect = (id, score) => {
     setAnswers((prev) => ({ ...prev, [id]: score }));
