@@ -51,13 +51,13 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
         {/* 상단 헤더 */}
         <header style={{ textAlign: 'center', margin: '0 0 24px 0' }}>
           <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 4px 0', fontWeight: '600', letterSpacing: '0.02em' }}>
-            RSCA-5 LITE RESULT
+            RSCA-5 CORE RESULT
           </p>
           <h2 style={{ fontSize: '22px', fontWeight: '700', margin: '0 0 4px 0', color: 'var(--color-navy-primary)' }}>
-            {userName ? `${userName} 님의 내면 에너지 상태` : '나의 내면 에너지 상태'}
+            {userName ? `${userName} 님의 코어 에너지 상태` : '나의 코어 에너지 상태'}
           </h2>
           <p style={{ fontSize: '13px', color: '#64748B', margin: 0 }}>
-            핵심 5문항으로 살펴본 현재 마음 잔량입니다.
+            5가지 핵심 지표로 스캔한 현재의 내면 에너지 잔량입니다.
           </p>
         </header>
 
@@ -141,14 +141,14 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
   return (
     <div className="container">
       <header style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy-primary)', backgroundColor: '#E2E8F0', padding: '4px 12px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px' }}>
-          약식 진단
+        <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy-primary)', backgroundColor: '#E2E8F0', padding: '4px 12px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px', letterSpacing: '0.05em' }}>
+          CORE ASSESSMENT
         </span>
-        <h1 style={{ fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0', color: 'var(--color-navy-primary)' }}>
-          RSCA-5 셀프케어 약식 점검
+        <h1 style={{ fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0', color: 'var(--color-navy-primary)', letterSpacing: '-0.02em' }}>
+          RSCA-5 내면 에너지 코어 진단
         </h1>
-        <p style={{ fontSize: '15px', color: '#4A5568', margin: 0 }}>
-          나의 내면 에너지 잔량을 5개 핵심 문항으로 확인합니다.
+        <p style={{ fontSize: '15px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
+          나의 멘탈 에너지 잔량을 5가지 핵심 지표로 정밀하게 스캔합니다.
         </p>
       </header>
 
