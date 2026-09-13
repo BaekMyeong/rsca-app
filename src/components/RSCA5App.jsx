@@ -130,7 +130,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
             나의 셀프케어 수준을 더 정확히 알고 싶다면?
           </h3>
           <div style={{ backgroundColor: 'rgba(26, 36, 51, 0.04)', padding: '14px', borderRadius: '10px', fontSize: '13.5px', color: 'var(--color-navy-primary)', fontWeight: '700', lineHeight: '1.5' }}>
-            ※ 5개 영역 상세 점수와 맞춤형 처방 결과는<br/>SCF 인증과정에서 확인 가능합니다.
+            ※ 5개 영역 상세 점수와 맞춤형 처방 결과는<br/>SCF 교육 과정에 참여하시면 상세 확인이 가능합니다.
           </div>
 
           <a
