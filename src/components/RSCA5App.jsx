@@ -8,6 +8,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
     const params = new URLSearchParams(window.location.search);
     return params.get('name') || '';
   });
+  useEffect(() => { document.title = 'RSCA-5 자가진단'; }, []);
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -72,10 +73,10 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
         {/* 상단 헤더 */}
         <header style={{ textAlign: 'center', margin: '0 0 24px 0' }}>
           <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 4px 0', fontWeight: '600', letterSpacing: '0.02em' }}>
-            RSCA-5 CORE RESULT
+            RSCA-5 RESULT
           </p>
           <h2 style={{ fontSize: '22px', fontWeight: '700', margin: '0 0 4px 0', color: 'var(--color-navy-primary)' }}>
-            {userName ? `${userName} 님의 코어 에너지 상태` : '나의 코어 에너지 상태'}
+            {userName ? `${userName} 님의 에너지 상태` : '나의 에너지 상태'}
           </h2>
           <p style={{ fontSize: '13px', color: '#64748B', margin: 0 }}>
             5가지 핵심 지표로 스캔한 현재의 내면 에너지 잔량입니다.
@@ -180,10 +181,10 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
     <div className="container">
       <header style={{ textAlign: 'center', marginBottom: '32px' }}>
         <span style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy-primary)', backgroundColor: '#E2E8F0', padding: '4px 12px', borderRadius: '9999px', display: 'inline-block', marginBottom: '12px', letterSpacing: '0.05em' }}>
-          CORE ASSESSMENT
+          ASSESSMENT
         </span>
         <h1 style={{ fontSize: '26px', fontWeight: '800', margin: '0 0 8px 0', color: 'var(--color-navy-primary)', letterSpacing: '-0.02em' }}>
-          RSCA-5 내면 에너지 코어 진단
+          RSCA-5 자가진단
         </h1>
         <p style={{ fontSize: '15px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
           나의 멘탈 에너지 잔량을 5가지 핵심 지표로 간단히 살펴봅니다.
