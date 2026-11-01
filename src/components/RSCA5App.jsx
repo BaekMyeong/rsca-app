@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { RSCA5_QUESTIONS } from '../data/rsca5Questions';
 import { calculateRSCA5 } from '../logic/rsca5Logic';
+import ResultNotice from './ResultNotice';
 
 export default function RSCA5App({ onGoToDeepAssessment }) {
   const [userName, setUserName] = useState(() => {
@@ -64,7 +65,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
 
   // --- 결과 화면 ---
   if (submitted) {
-    const { totalScore, percentage, levelInfo, lowestDomain } = calculateRSCA5(answers);
+    const { totalScore, percentage, levelInfo, lowestDomains, allTied, hasVeryLowDomain } = calculateRSCA5(answers);
 
     return (
       <div className="container">
@@ -109,19 +110,32 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
           </p>
         </div>
 
-        {/* 2. 가장 시급한 돌봄 영역 하이라이트 */}
+        {/* 2. 먼저 살펴볼 영역 하이라이트 */}
         <div className="card-wrapper" style={{ padding: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-            <span style={{ fontSize: '12px', fontWeight: '800', color: '#E17055', backgroundColor: '#FDF2F0', padding: '4px 10px', borderRadius: '6px' }}>
-              우선 점검 권고
-            </span>
-            <strong style={{ fontSize: '16px', color: 'var(--color-navy-primary)' }}>
-              {lowestDomain.name} ({lowestDomain.key})
-            </strong>
-          </div>
-          <p style={{ fontSize: '14px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
-            현재 5대 영역 중 회복 에너지가 가장 낮게 측정되었습니다. 이 영역의 누수를 우선적으로 보살펴주어야 감정 균형이 안정권으로 올라섭니다.
-          </p>
+          {allTied ? (
+            <p style={{ fontSize: '14px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
+              5개 영역의 점수가 모두 같아, 먼저 살펴볼 영역을 따로 짚지 않았습니다.
+            </p>
+          ) : (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+                <span style={{ fontSize: '12px', fontWeight: '800', color: '#E17055', backgroundColor: '#FDF2F0', padding: '4px 10px', borderRadius: '6px' }}>
+                  우선 점검 권고
+                </span>
+                <strong style={{ fontSize: '16px', color: 'var(--color-navy-primary)' }}>
+                  {lowestDomains.map((d) => `${d.name} (${d.key})`).join(' · ')}
+                </strong>
+              </div>
+              <p style={{ fontSize: '14px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
+                {lowestDomains.length > 1
+                  ? '이 영역들이 같은 점수로 가장 낮게 나타났습니다. 마음이 더 쓰이는 영역부터 살펴보면 도움이 됩니다.'
+                  : '5대 영역 중 점수가 가장 낮게 나타난 영역입니다. 이 영역을 먼저 살펴보면 감정 균형을 회복하는 데 도움이 됩니다.'}
+                {levelInfo.level === 3 && hasVeryLowDomain && (
+                  <><br />합계는 안정 구간이지만 이 영역의 점수가 낮으니 따로 살펴보세요.</>
+                )}
+              </p>
+            </>
+          )}
         </div>
 
         {/* 3. RSCA-30 정밀 진단 유도 (잠금 배너 카드) */}
@@ -147,11 +161,13 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
           </a>
         </div>
 
+        <ResultNotice showSupport={levelInfo.level === 1} />
+
         <button
           type="button"
           onClick={handleReset}
           className="btn-secondary"
-          style={{ marginTop: '8px' }}
+          style={{ marginTop: '16px' }}
         >
           다시 진단하기 (초기화)
         </button>
@@ -170,7 +186,9 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
           RSCA-5 내면 에너지 코어 진단
         </h1>
         <p style={{ fontSize: '15px', color: '#4A5568', margin: 0, lineHeight: '1.6' }}>
-          나의 멘탈 에너지 잔량을 5가지 핵심 지표로 정밀하게 스캔합니다.
+          나의 멘탈 에너지 잔량을 5가지 핵심 지표로 간단히 살펴봅니다.
+          <br />
+          <span style={{ fontSize: '12px', color: '#6B7280' }}>의학적 진단이 아닌 간이 자기점검 도구입니다.</span>
         </p>
       </header>
 

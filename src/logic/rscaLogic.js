@@ -23,11 +23,11 @@ export const getLevelInfo = (totalScore) => {
   if (totalScore <= 59) {
     return { level: 1, title: "번아웃 및 고갈 위기", badgeColor: "bg-rose-100 text-rose-700 border-rose-200",
       quote: "애써 버텨온 내면의 신호에 귀 기울일 때입니다. 지금은 다른 어떤 과업보다 나를 돌보는 일이 가장 안전한 선택입니다.",
-      description: "감정 에너지가 심각하게 방전된 상태입니다.\n무리한 과업을 멈추고 자율신경계를 안정시키는 깊은 쉼이 우선입니다." };
+      description: "감정 에너지가 많이 방전된 상태로 보입니다.\n무리한 과업을 잠시 멈추고 충분히 쉬는 것이 우선입니다." };
   } else if (totalScore <= 89) {
     return { level: 2, title: "감정 마모 및 불균형", badgeColor: "bg-amber-100 text-amber-700 border-amber-200",
       quote: "바쁜 일상 속에서 나도 모르게 에너지가 새어 나가고 있었습니다. 감정 울타리를 가만히 점검해 줄 시간입니다.",
-      description: "일상의 자극으로 감정 소진이 누적된 상태입니다.\n감정 누수 요인을 차단하고 감정 울타리를 점검할 때입니다." };
+      description: "일상의 자극으로 감정 소진이 쌓인 상태로 보입니다.\n감정이 새어 나가는 요인을 살피고 감정 울타리를 점검할 때입니다." };
   } else if (totalScore <= 119) {
     return { level: 3, title: "감정적 안정", badgeColor: "bg-emerald-100 text-emerald-700 border-emerald-200",
       quote: "일상의 흔들림 속에서도 중심을 잘 지켜내고 있습니다. 지금의 유연한 회복 리듬을 편안하게 유지해 보세요.",
@@ -59,39 +59,68 @@ export const getThreeSkills = (p) => {
 
 export const getPersonaAndPrescription = (domainScores, totalScore) => {
   const domains = ['R', 'E', 'A', 'C', 'H'];
-  let minDomain = 'R';
-  let minScore = 999;
-  domains.forEach((d) => {
-    if (domainScores[d] < minScore) { minScore = domainScores[d]; minDomain = d; }
-  });
+
+  // 가장 낮은 점수의 영역을 모두 찾는다(동점 포함, R-E-A-C-H 순서).
+  const minScore = Math.min(...domains.map((d) => domainScores[d]));
+  const minDomains = domains.filter((d) => domainScores[d] === minScore);
+  const allTied = minDomains.length === domains.length;
+  // 총점이 안정 구간(Level 3 이상, 90점 이상)이면 '문제 유형'이 아니라 '먼저 살펴볼 영역'으로 안내한다.
+  const isStableLevel = totalScore >= 90;
 
   const isAllBalanced = domains.every((d) => domainScores[d] >= 24) && totalScore >= 120;
   if (isAllBalanced) {
     return {
       persona: "감정 회복탄력형",
       personaDesc: "5개 감정 축이 고르게 발달하여 스트레스 상황에서도 스스로 빠르게 회복하는 균형 잡힌 상태입니다.",
-      mvr: { trigger: "스트레스가 시작될 때", action: "지금 상태를 가만히 자각하고 호흡 3회 하기", effect: "탁월한 감정 회복력을 지속 유지" },
-      minDomain: null
+      mvr: { trigger: "스트레스가 시작될 때", action: "지금 상태를 가만히 자각하고 호흡 3회 하기", effect: "지금의 회복력을 꾸준히 유지하는 데 도움이 됩니다." },
+      minDomain: null,
+      minDomains: [],
+      tiedDomains: [],
+      allTied: false,
+      isStableLevel
     };
   }
 
   const map = {
     E: { persona: "감정 과열 억압형",
       personaDesc: "불편한 감정을 논리로 덮어두려다 한순간에 폭발하거나 감정적 침체에 빠지기 쉬운 유형입니다.",
-      mvr: { trigger: "가슴이 답답하고 짜증이나 무력감이 치밀 때", action: "손을 명치에 대고 '지금 내 안에 서운함(불안)의 파도가 인다'고 소리 내어 말하기", effect: "감정 명명화를 통해 뇌의 과열을 진정시키고 조율 센터를 켭니다." } },
+      mvr: { trigger: "가슴이 답답하고 짜증이나 무력감이 치밀 때", action: "손을 명치에 대고 '지금 내 안에 서운함(불안)의 파도가 인다'고 소리 내어 말하기", effect: "감정에 이름을 붙이면 감정과 한 발 떨어져 바라보는 데 도움이 됩니다." } },
     R: { persona: "만성 감정 방전형",
       personaDesc: "바쁜 일정에 치여 자신의 쉼을 가장 먼저 희생시키다 배터리가 완전히 고갈된 유형입니다.",
-      mvr: { trigger: "턱에 힘이 들어가고 목덜미와 어깨가 굳어질 때", action: "창밖 먼 곳을 바라보며 날숨을 2배 길게 내쉬는 호흡 3회 하기", effect: "미주신경을 자극하여 긴장된 신경계를 즉시 이완 상태로 돌립니다." } },
+      mvr: { trigger: "턱에 힘이 들어가고 목덜미와 어깨가 굳어질 때", action: "창밖 먼 곳을 바라보며 날숨을 2배 길게 내쉬는 호흡 3회 하기", effect: "천천히 길게 내쉬는 호흡은 긴장을 낮추고 몸을 이완하는 데 도움이 됩니다." } },
     H: { persona: "무경계 소진형",
       personaDesc: "타인의 요청을 거절하지 못해 감정의 경계가 자꾸 허물어지고, 정작 내 에너지는 계속 새어 나가는 유형입니다.",
-      mvr: { trigger: "거절하기 미안해 즉시 '네'라고 대답하려 할 때", action: "3초간 멈추고 '일정 확인 후 10분 뒤에 말씀드릴게요'라고 답 유예하기", effect: "감정적 충동 반응을 차단하고 스스로 결정할 안전거리를 확보합니다." } },
+      mvr: { trigger: "거절하기 미안해 즉시 '네'라고 대답하려 할 때", action: "3초간 멈추고 '일정 확인 후 10분 뒤에 말씀드릴게요'라고 답 유예하기", effect: "즉각 반응하기 전에 멈추는 시간을 두면 스스로 결정할 안전거리를 확보하는 데 도움이 됩니다." } },
     C: { persona: "완벽주의 자책형",
       personaDesc: "작은 실수에도 '왜 이것밖에 못 했을까'라며 스스로에게 가혹한 비난을 쏟아붓는 유형입니다.",
-      mvr: { trigger: "머릿속에서 자책의 목소리가 들리기 시작할 때", action: "양손으로 어깨를 감싸 안고(나비 포옹) '많이 애썼다, 괜찮다' 다독이기", effect: "신체 접촉을 통해 스트레스 호르몬을 줄이고 진정 회로를 활성화합니다." } },
+      mvr: { trigger: "머릿속에서 자책의 목소리가 들리기 시작할 때", action: "양손으로 어깨를 감싸 안고(나비 포옹) '많이 애썼다, 괜찮다' 다독이기", effect: "나비 포옹으로 몸을 토닥이면 스스로를 진정시키고 다독이는 데 도움이 됩니다." } },
     A: { persona: "결핍성 성취 질주형",
       personaDesc: "외적 성과로만 나의 가치를 증명하려 해 늘 초조하고 타인과의 비교에 시달리는 유형입니다.",
-      mvr: { trigger: "타인의 소식이나 성과를 보며 속이 쓰리고 불안해질 때", action: "화면을 끄고 지금 내 손안에 있는 소중한 자원 3가지를 적어보기", effect: "뇌의 결핍 경보를 끄고 내 존재 자체의 온전함으로 초점을 되돌립니다." } }
+      mvr: { trigger: "타인의 소식이나 성과를 보며 속이 쓰리고 불안해질 때", action: "화면을 끄고 지금 내 손안에 있는 소중한 자원 3가지를 적어보기", effect: "결핍보다 이미 가진 자원으로 시선을 옮겨, 내 존재 자체의 온전함으로 초점을 되돌리는 데 도움이 됩니다." } }
   };
 
-  return { ...map[minDomain], minDomain };
+  // 5개 영역 점수가 모두 같으면 한 영역을 먼저 짚을 근거가 없으므로, 기본 시작점인 R부터 안내한다.
+  if (allTied) {
+    return {
+      persona: "영역별 점수가 고른 상태",
+      personaDesc: "다섯 영역의 점수가 모두 같아 한 영역을 먼저 짚기 어렵습니다. 아래 가이드는 가장 기본이 되는 R(주도적 충전)부터 시작해 보세요.",
+      mvr: map.R.mvr,
+      minDomain: 'R',
+      minDomains,
+      tiedDomains: [],
+      allTied: true,
+      isStableLevel
+    };
+  }
+
+  // 동점이면 R-E-A-C-H 순서로 앞선 영역을 안내하고, 나머지 동점 영역은 함께 알린다.
+  const minDomain = minDomains[0];
+  return {
+    ...map[minDomain],
+    minDomain,
+    minDomains,
+    tiedDomains: minDomains.slice(1).map((d) => ({ key: d, persona: map[d].persona })),
+    allTied: false,
+    isStableLevel
+  };
 };

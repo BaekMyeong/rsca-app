@@ -3,6 +3,7 @@ import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Responsi
 import { RSCA_QUESTIONS } from './data/rscaQuestions';
 import { calculateScores, getLevelInfo, getThreeSkills, getPersonaAndPrescription } from './logic/rscaLogic';
 import html2canvas from 'html2canvas';
+import ResultNotice, { NOTICE_SHORT } from './components/ResultNotice';
 
 export const ReachEmblem = () => {
   return (
@@ -245,8 +246,9 @@ function RSCADeepApp() {
               margin: 0
             }}
           >
-            나의 셀프케어 상태를 진단합니다.<br />
-            모든 문항은 직관적으로 솔직하게 답해 주세요.
+            나의 셀프케어 상태를 스스로 점검합니다.<br />
+            모든 문항은 직관적으로 솔직하게 답해 주세요.<br />
+            <span style={{ fontSize: '12px', color: '#6B7280' }}>의학적 진단이 아닌 자기점검 도구입니다.</span>
           </p>
         </div>
 
@@ -490,7 +492,8 @@ function RSCADeepApp() {
             })}
           </div>
         </div> {/* Close Radar Chart card-wrapper */}
-        
+
+        <p style={{ margin: '12px 0 0 0', textAlign: 'center', fontSize: '11px', color: '#9CA3AF' }}>{NOTICE_SHORT}</p>
         </div> {/* Close resultRef div */}
           
         {/* REACH 5대 영역 해설 */}
@@ -523,10 +526,24 @@ function RSCADeepApp() {
         {/* Persona & Prescription */}
         <div className="card-wrapper" style={{ marginTop: '16px' }}>
           <div className="result-section-title">감정 패턴분석과 맞춤 셀프케어</div>
+          {result.persona.isStableLevel && !result.persona.allTied && result.persona.minDomain && (
+            <p style={{ fontSize: '14px', color: '#475569', margin: '0 0 12px 0', lineHeight: 1.6, wordBreak: 'keep-all' }}>
+              전체 점수는 안정적인 편이지만, 아래 영역을 가장 먼저 살펴보면 더 균형 잡힌 회복에 도움이 됩니다.
+            </p>
+          )}
           {result.persona.minDomain && (
-            <div style={{ fontSize: '13px', color: '#3B82F6', backgroundColor: '#EFF6FF', padding: '6px 12px', borderRadius: '8px', display: 'inline-block', marginBottom: '12px', fontWeight: '600' }}>
-              * 가장 집중적인 충전이 필요한 {result.persona.minDomain} 영역을 중심으로 안내합니다.
+            <div style={{ fontSize: '13px', color: '#3B82F6', backgroundColor: '#EFF6FF', padding: '6px 12px', borderRadius: '8px', display: 'inline-block', marginBottom: '12px', fontWeight: '600', lineHeight: 1.5 }}>
+              {result.persona.allTied
+                ? '* 다섯 영역의 점수가 같아, 가장 기본이 되는 R 영역부터 안내합니다.'
+                : result.persona.tiedDomains.length > 0
+                  ? `* ${result.persona.minDomains.join('·')} 영역이 같은 점수로 가장 낮아, 그중 ${result.persona.minDomain} 영역을 중심으로 안내합니다.`
+                  : `* 가장 집중적인 돌봄이 필요한 ${result.persona.minDomain} 영역을 중심으로 안내합니다.`}
             </div>
+          )}
+          {result.persona.tiedDomains.length > 0 && (
+            <p style={{ fontSize: '13px', color: '#64748B', margin: '0 0 12px 0', lineHeight: 1.6, wordBreak: 'keep-all' }}>
+              함께 살펴볼 영역: {result.persona.tiedDomains.map((t) => `${t.key} (${t.persona})`).join(', ')}
+            </p>
           )}
           <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{result.persona.persona}</h3>
           <p style={{ lineHeight: 1.6, marginBottom: '24px', color: 'var(--color-text-muted)', fontSize: '15px' }}>{result.persona.personaDesc}</p>
@@ -606,6 +623,8 @@ function RSCADeepApp() {
             })}
           </div>
         </div>
+
+        <ResultNotice showSupport={result.levelInfo.level === 1} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '24px' }}>
           
