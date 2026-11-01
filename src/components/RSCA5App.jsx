@@ -161,7 +161,7 @@ export default function RSCA5App({ onGoToDeepAssessment }) {
           </a>
         </div>
 
-        <ResultNotice showSupport={levelInfo.level === 1} />
+        <ResultNotice />
 
         <button
           type="button"

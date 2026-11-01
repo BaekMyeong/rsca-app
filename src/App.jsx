@@ -624,7 +624,7 @@ function RSCADeepApp() {
           </div>
         </div>
 
-        <ResultNotice showSupport={result.levelInfo.level === 1} />
+        <ResultNotice />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '24px' }}>
           

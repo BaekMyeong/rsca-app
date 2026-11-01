@@ -1,7 +1,7 @@
-// 결과 화면 하단 안내문: 의학적 진단이 아님을 알리고, 필요 시 도움받을 곳을 안내함.
+// 결과 화면 하단 안내문: 의학적 진단이 아님을 알리고, 필요 시 전문가 상담을 권함.
 export const NOTICE_SHORT = '자기점검·교육용 참고 자료이며 의학적 진단이 아닙니다.';
 
-export default function ResultNotice({ showSupport = false }) {
+export default function ResultNotice() {
   return (
     <div
       style={{
@@ -24,13 +24,6 @@ export default function ResultNotice({ showSupport = false }) {
       <div style={{ marginTop: '6px' }}>
         마음이 많이 힘들거나 일상이 어려운 상태가 이어진다면 혼자 견디지 말고 전문가와 상담해 보세요.
       </div>
-      {showSupport && (
-        <div style={{ marginTop: '10px', padding: '10px 12px', borderRadius: '8px', backgroundColor: '#FFF8F5', border: '1px solid #F3D5CB', color: '#7C3A28' }}>
-          지금 너무 힘들다면 24시간 상담을 이용할 수 있습니다.
-          <br />
-          자살예방 상담전화 109 · 정신건강 위기상담전화 1577-0199
-        </div>
-      )}
     </div>
   );
 }
